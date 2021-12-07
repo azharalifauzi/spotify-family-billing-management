@@ -20,10 +20,11 @@ export default async function handler(
 
   const transporter = nodemailer.createTransport(
     smtpTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
+      service: "sendinblue",
+      host: "smtp-relay.sendinblue.com",
+      port: 587,
       auth: {
-        user: "spotify.family.ah@gmail.com",
+        user: process.env.EMAIL_ADDRESS,
         pass: process.env.EMAIL_PASSWORD,
       },
     })
