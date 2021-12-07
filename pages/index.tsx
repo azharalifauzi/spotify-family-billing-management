@@ -48,9 +48,9 @@ const Home: NextPage<{ users: UserSchema[] }> = ({ users }) => {
         </TableCaption>
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th isNumeric>Remaining Balance (IDR)</Th>
-            <Th isNumeric>Enough For (Times)</Th>
+            <Th>{HOME_TEXT.get("table.name", locale)}</Th>
+            <Th isNumeric>{HOME_TEXT.get("table.balance", locale)}</Th>
+            <Th isNumeric>{HOME_TEXT.get("table.enoughFor", locale)}</Th>
           </Tr>
         </Thead>
         <Tbody>

@@ -1,5 +1,5 @@
 export class I18nText<T extends I18nTextDefault> {
-  text: T;
+  private text: T;
 
   constructor(text: T) {
     this.text = text;
