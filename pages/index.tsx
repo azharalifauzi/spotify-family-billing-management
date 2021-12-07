@@ -75,7 +75,7 @@ const Home: NextPage<{ users: UserSchema[] }> = ({ users }) => {
                   <Td>{name}</Td>
                   <Td isNumeric>{formattedBalance}</Td>
                   <Td isNumeric>
-                    {balance < 0 ? (
+                    {balance < SUBSCRIPTION_PRICE ? (
                       <Badge colorScheme="red">Topup Needed</Badge>
                     ) : (
                       enoughFor
