@@ -10,6 +10,7 @@ type UserSchema = {
   is_active: booolean;
   email: string;
   name: string;
+  is_subscribe: boolean;
 };
 
 type SubscriptionSchema = {

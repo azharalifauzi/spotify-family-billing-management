@@ -53,6 +53,7 @@ export default async function handler(
         .update({
           balance: userData[0].balance - SUBSCRIPTION_PRICE,
           is_active: true,
+          is_subscribe: true,
         })
         .match({ id: user_id });
 

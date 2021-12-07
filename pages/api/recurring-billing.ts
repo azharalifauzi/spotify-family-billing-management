@@ -28,7 +28,7 @@ export default async function handler(
     if (subscriptions?.length === 0) {
       res
         .status(404)
-        .json({ message: "There is no subscription to billed", data: null });
+        .json({ message: "There is no user to be billed", data: null });
       return;
     }
 

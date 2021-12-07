@@ -34,7 +34,9 @@ export default async function handler(
     const { data: users } = await supabase
       .from<UserSchema>("users")
       .select()
-      .filter("balance", "lt", SUBSCRIPTION_PRICE);
+      .filter("balance", "lt", SUBSCRIPTION_PRICE)
+      .filter("is_subscribe", "eq", true)
+      .filter("email", "not.eq", null);
 
     if (!users || users.length === 0) {
       res
