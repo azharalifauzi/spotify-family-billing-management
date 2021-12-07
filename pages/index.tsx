@@ -14,11 +14,13 @@ import {
 import { useRouter } from "next/router";
 import { HOME_TEXT } from "i18n/home";
 import { SUBSCRIPTION_PRICE } from "helpers/const";
-import { baseUrl } from "helpers/baseUrl";
+import { supabase } from "libs/supabase";
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`${baseUrl}/api/users`);
-  const data: UserSchema[] = (await res.json()).data ?? [];
+  const { data } = await supabase
+    .from<UserSchema>("users")
+    .select()
+    .eq("is_active", true);
 
   return {
     props: {
