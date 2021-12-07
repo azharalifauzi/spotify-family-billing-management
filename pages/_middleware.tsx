@@ -3,10 +3,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import parser from "accept-language-parser";
 
-export function middleware(request: NextRequest) {
-  const { locale, href } = request.nextUrl;
+const PUBLIC_FILE = /\.(.*)$/;
 
-  if (locale === "default" && !href.includes("/api/")) {
+export function middleware(request: NextRequest) {
+  const { locale, href, pathname } = request.nextUrl;
+
+  if (
+    locale === "default" &&
+    !href.includes("/api/") &&
+    !PUBLIC_FILE.test(pathname)
+  ) {
     const lang =
       parser.pick(
         ["id", "en"],

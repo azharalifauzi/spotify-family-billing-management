@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { HOME_TEXT } from "i18n/home";
 import { SUBSCRIPTION_PRICE } from "helpers/const";
 import { supabase } from "libs/supabase";
+import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await supabase
@@ -33,52 +34,60 @@ const Home: NextPage<{ users: UserSchema[] }> = ({ users }) => {
   const { locale } = useRouter();
 
   return (
-    <Container maxW="container.lg">
-      <Text
-        fontWeight="bold"
-        fontSize={{ base: "3xl", md: "4xl", lg: "6xl" }}
-        mb={{ base: "4", lg: "8" }}
-        lineHeight="1.2"
-      >
-        {HOME_TEXT.get("title", locale)}
-      </Text>
-      <Table variant="simple">
-        <TableCaption>
-          Current Spotify package is{" "}
-          {new Intl.NumberFormat("id-ID").format(SUBSCRIPTION_PRICE)} IDR /
-          month.
-        </TableCaption>
-        <Thead>
-          <Tr>
-            <Th>{HOME_TEXT.get("table.name", locale)}</Th>
-            <Th isNumeric>{HOME_TEXT.get("table.balance", locale)}</Th>
-            <Th isNumeric>{HOME_TEXT.get("table.enoughFor", locale)}</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {users.map(({ id, balance, name }) => {
-            const formattedBalance = new Intl.NumberFormat("id-ID").format(
-              balance
-            );
-            let enoughFor = Math.floor(balance / SUBSCRIPTION_PRICE).toFixed(0);
+    <>
+      <Head>
+        <title>Spotify AH Billing</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      </Head>
+      <Container maxW="container.lg">
+        <Text
+          fontWeight="bold"
+          fontSize={{ base: "3xl", md: "4xl", lg: "6xl" }}
+          mb={{ base: "4", lg: "8" }}
+          lineHeight="1.2"
+        >
+          {HOME_TEXT.get("title", locale)}
+        </Text>
+        <Table variant="simple">
+          <TableCaption>
+            Current Spotify package is{" "}
+            {new Intl.NumberFormat("id-ID").format(SUBSCRIPTION_PRICE)} IDR /
+            month.
+          </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>{HOME_TEXT.get("table.name", locale)}</Th>
+              <Th isNumeric>{HOME_TEXT.get("table.balance", locale)}</Th>
+              <Th isNumeric>{HOME_TEXT.get("table.enoughFor", locale)}</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {users.map(({ id, balance, name }) => {
+              const formattedBalance = new Intl.NumberFormat("id-ID").format(
+                balance
+              );
+              let enoughFor = Math.floor(balance / SUBSCRIPTION_PRICE).toFixed(
+                0
+              );
 
-            return (
-              <Tr key={`user-${id}`}>
-                <Td>{name}</Td>
-                <Td isNumeric>{formattedBalance}</Td>
-                <Td isNumeric>
-                  {balance < 0 ? (
-                    <Badge colorScheme="red">Need Payment</Badge>
-                  ) : (
-                    enoughFor
-                  )}
-                </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-    </Container>
+              return (
+                <Tr key={`user-${id}`}>
+                  <Td>{name}</Td>
+                  <Td isNumeric>{formattedBalance}</Td>
+                  <Td isNumeric>
+                    {balance < 0 ? (
+                      <Badge colorScheme="red">Topup Needed</Badge>
+                    ) : (
+                      enoughFor
+                    )}
+                  </Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </Container>
+    </>
   );
 };
 

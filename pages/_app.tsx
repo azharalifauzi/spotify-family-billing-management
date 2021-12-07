@@ -2,7 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Navigation from "../components/Navigation";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { extendTheme, ChakraTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   fonts: {
