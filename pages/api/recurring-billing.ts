@@ -22,15 +22,15 @@ export default async function handler(
 
     const { data: subscriptions } = await supabase
       .from<SubscriptionSchema>("subscription")
-      .select()
-      .filter("end_date", "eq", today.toISOString());
+      .select();
+    // .filter("end_date", "eq", today.toISOString());
 
-    if (subscriptions?.length === 0) {
-      res
-        .status(404)
-        .json({ message: "There is no user to be billed", data: null });
-      return;
-    }
+    // if (subscriptions?.length === 0) {
+    //   res
+    //     .status(404)
+    //     .json({ message: "There is no user to be billed", data: null });
+    //   return;
+    // }
 
     if (subscriptions) {
       const loop = subscriptions.map(async ({ user_id, id }) => {
